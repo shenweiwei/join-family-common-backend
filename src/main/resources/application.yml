@@ -1,0 +1,110 @@
+spring:
+  profiles:
+    active: dev
+  jpa:
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+server:
+  servlet:
+    context-path: /jf/common
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/join-family
+    username: postgres
+    password: Pass1234
+    driverClassName: org.postgresql.Driver
+  rabbitmq:
+    host: 192.168.1.28
+    username: guest
+    password: guest
+    port: 5672
+    publisher-confirms: true
+    publisher-returns: true
+    template:
+      mandatory: true
+  redis:
+    database: 0
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    cluster:
+      max-redirects: 3
+      nodes:
+      - 192.168.1.28:7000
+      - 192.168.1.28:7001
+      - 192.168.1.28:7002
+      - 192.168.1.28:7003
+      - 192.168.1.28:7004
+      - 192.168.1.28:7005
+    timeout: 60000
+---
+spring:
+  profiles: qa
+  rabbitmq:
+    host: 192.168.1.28
+    username: guest
+    password: guest
+    port: 5672
+    publisher-confirms: true
+    publisher-returns: true
+    template:
+      mandatory: true
+  redis:
+    database: 0
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    cluster:
+      max-redirects: 3
+      nodes:
+      - 192.168.1.28:7000
+      - 192.168.1.28:7001
+      - 192.168.1.28:7002
+      - 192.168.1.28:7003
+      - 192.168.1.28:7004
+      - 192.168.1.28:7005
+    timeout: 60000
+---
+spring:
+  profiles: prod
+  rabbitmq:
+    host: 192.168.1.28
+    username: guest
+    password: guest
+    port: 5672
+    publisher-confirms: true
+    publisher-returns: true
+    template:
+      mandatory: true
+  redis:
+    database: 0
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    cluster:
+      max-redirects: 3
+      nodes:
+      - 192.168.1.28:7000
+      - 192.168.1.28:7001
+      - 192.168.1.28:7002
+      - 192.168.1.28:7003
+      - 192.168.1.28:7004
+      - 192.168.1.28:7005
+    timeout: 60000
