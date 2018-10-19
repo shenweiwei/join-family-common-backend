@@ -3,7 +3,10 @@ package org.sww.joinfamily.common.controller ;
 import org.slf4j.Logger ;
 import org.slf4j.LoggerFactory ;
 import org.springframework.beans.factory.annotation.Autowired ;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping ;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody ;
 import org.springframework.web.bind.annotation.RequestMapping ;
 import org.springframework.web.bind.annotation.RestController ;
@@ -24,14 +27,42 @@ public class UserController {
 	@Autowired
 	private UserManager			userManager ;
 	
-	@PostMapping("/add")
+	@PostMapping("/register")
 	public DeferredResult<AsyncHttpResponseDTO> addUserInfo(@RequestBody UserRequestDTO userRequestDTO) {
 		AsyncHttpDataTransferObject asyncHttpDataTransferObject = AsyncHttpDataTranObjectBuilder.builder(UserRequestDTO.class, UserResponseDTO.class).build() ;
-		userManager.addUserInfo(initUserRequestDto(asyncHttpDataTransferObject, userRequestDTO)) ;
+		userManager.addUserInfo(userInfo(asyncHttpDataTransferObject, userRequestDTO)) ;
 		return asyncHttpDataTransferObject.getDeferredResult() ;
 	}
 	
-	private AsyncHttpDataTransferObject initUserRequestDto(AsyncHttpDataTransferObject asyncHttpDataTransferObject, UserRequestDTO userRequestDTO) {
+	@PutMapping("/edit/{id}")
+	public DeferredResult<AsyncHttpResponseDTO> editUserInfo(@PathVariable Long id,@RequestBody UserRequestDTO userRequestDTO) {
+		AsyncHttpDataTransferObject asyncHttpDataTransferObject = AsyncHttpDataTranObjectBuilder.builder(UserRequestDTO.class, UserResponseDTO.class).build() ;
+		userManager.addUserInfo(userInfo(asyncHttpDataTransferObject, userRequestDTO)) ;
+		return asyncHttpDataTransferObject.getDeferredResult() ;
+	}
+	
+	@GetMapping("/login/{id}")
+	public DeferredResult<AsyncHttpResponseDTO> loginById(@PathVariable Long id) {
+		AsyncHttpDataTransferObject asyncHttpDataTransferObject = AsyncHttpDataTranObjectBuilder.builder(UserRequestDTO.class, UserResponseDTO.class).build() ;
+//		userManager.addUserInfo(userInfo(asyncHttpDataTransferObject, userRequestDTO)) ;
+		return asyncHttpDataTransferObject.getDeferredResult() ;
+	}
+	
+	@GetMapping("/find/{id}")
+	public DeferredResult<AsyncHttpResponseDTO> findUserInfoById(@PathVariable Long id) {
+		AsyncHttpDataTransferObject asyncHttpDataTransferObject = AsyncHttpDataTranObjectBuilder.builder(UserRequestDTO.class, UserResponseDTO.class).build() ;
+//		userManager.addUserInfo(userInfo(asyncHttpDataTransferObject, userRequestDTO)) ;
+		return asyncHttpDataTransferObject.getDeferredResult() ;
+	}
+	
+	@GetMapping("/find/list")
+	public DeferredResult<AsyncHttpResponseDTO> findUserInfoList(@RequestBody UserRequestDTO userRequestDTO) {
+		AsyncHttpDataTransferObject asyncHttpDataTransferObject = AsyncHttpDataTranObjectBuilder.builder(UserRequestDTO.class, UserResponseDTO.class).build() ;
+		userManager.addUserInfo(userInfo(asyncHttpDataTransferObject, userRequestDTO)) ;
+		return asyncHttpDataTransferObject.getDeferredResult() ;
+	}
+	
+	private AsyncHttpDataTransferObject userInfo(AsyncHttpDataTransferObject asyncHttpDataTransferObject, UserRequestDTO userRequestDTO) {
 		asyncHttpDataTransferObject.setInputDTO(userRequestDTO) ;
 		return asyncHttpDataTransferObject ;
 	}
